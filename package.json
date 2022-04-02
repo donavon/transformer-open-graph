@@ -1,0 +1,84 @@
+{
+  "version": "0.1.1",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": " tsdx test --watch",
+    "coverage": "tsdx test --coverage",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "transformer-open-graph",
+  "author": "Donavon West <github@donavon.com> (https://donavon.com/)",
+  "keywords": [
+    "open-graph",
+    "transformer",
+    "remark-plugin",
+    "remark"
+  ],
+  "module": "dist/transformer-open-graph.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/transformer-open-graph.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/transformer-open-graph.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "node-fetch": "^3.2.3"
+  },
+  "peerDependencies": {
+    "@remark-embedder/core": "^2.0.0"
+  },
+  "devDependencies": {
+    "@remark-embedder/core": "^2.0.0",
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@types/jest": "^27.4.1",
+    "babel-jest": "^27.5.1",
+    "husky": "^7.0.4",
+    "size-limit": "^7.0.8",
+    "ts-jest": "^27.1.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "transformIgnorePatterns": [],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
+  }
+}
