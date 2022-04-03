@@ -51,6 +51,38 @@ async function go() {
 go();
 ```
 
+## Config options
+
+You can pass the following config options
+
+| Options name | description                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `render`     | A custom render function that accepts one argument, `data` of type [`OpenGraphNinja`](./src/openGraphNinja.ts), and returns an HTML string. |
+
+### Example custom render
+
+```ts
+const exampleMarkdown = `
+This is my website:
+
+https://donavon.com
+`;
+
+const customRender: OpenGraphRender = (data) =>
+  `<h2>Hello ${data.hostname}</h2>`;
+
+const config: OpenGraphConfig = { render: customRender };
+
+const result = await remark()
+  .use(remarkEmbedder, {
+    transformers: [transformerOpenGraph, config],
+  })
+  .use(html)
+  .process(exampleMarkdown);
+// <p>This is my website:</p>
+// <h2>Hello donavon.com</h2>
+```
+
 ## Example output
 
 You'll need to B.Y.O. CSS, but you can get beautiful web page preview output like this.
