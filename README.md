@@ -75,7 +75,7 @@ const config: OpenGraphConfig = { render: customRender };
 
 const result = await remark()
   .use(remarkEmbedder, {
-    transformers: [transformerOpenGraph, config],
+    transformers: [[transformerOpenGraph, config]],
   })
   .use(html)
   .process(exampleMarkdown);
