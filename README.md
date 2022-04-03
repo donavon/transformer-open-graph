@@ -51,6 +51,12 @@ async function go() {
 go();
 ```
 
+## Example output
+
+You'll need to B.Y.O. CSS, but you can get beautiful web page preview output like this.
+
+![sample screen](./docs/example.png)
+
 ## Getting Started
 
 Install the library with your package manager of choice, e.g.:
