@@ -1,85 +1,56 @@
-import fetch from 'node-fetch';
+import path from 'path';
 import type { Transformer } from '@remark-embedder/core';
-
-type OpenGraphNinja = {
-  hostname: string;
-  requestUrl: string;
-  title: string;
-  description?: string;
-  image?: {
-    url: string;
-    alt?: string;
-  };
-  details?: {
-    ogUrl?: string;
-    ogTitle?: string;
-    ogDescription?: string;
-    twitterCard?: string;
-    twitterCreator?: string;
-    twitterSite?: string;
-    twitterTitle?: string;
-    twitterDescription?: string;
-    ogImage?: {
-      url?: string;
-      width?: string;
-      height?: string;
-      type?: string;
-    };
-    twitterImage?: {
-      url?: string;
-      width?: string;
-      height?: string;
-      alt?: string;
-    };
-    ogLocale?: string;
-  };
-};
-
-const encodeHtml = (html: string) =>
-  html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+import fetch from 'make-fetch-happen';
+import { OpenGraphNinja, openGraphNinjaUrl } from './openGraphNinja';
+import { encodeHtml } from './encodeHtml';
 
 const getImageHtml = (data?: OpenGraphNinja) =>
   data?.image
     ? `<img src="${encodeHtml(data.image.url)}" alt="${encodeHtml(
-        data.image.alt ?? data.title ?? data.description
+        data.image.alt ?? data.title ?? ''
       )}" class="ogn-image">`
     : '';
 
+fetch.defaults({
+  cachePath: path.join(
+    process.cwd(),
+    'node_modules/.cache/donavon/transformer-open-graph/fetch'
+  ),
+});
+
+async function fetchOpenGraph(url: string): Promise<OpenGraphNinja | null> {
+  try {
+    const res = await fetch(
+      `${openGraphNinjaUrl}?url=${encodeURIComponent(url)}`
+    );
+    if (!res.ok) return null;
+
+    const data = (await res.json()) as OpenGraphNinja;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 const transformer: Transformer = {
-  name: 'transformer-open-graph',
-
-  async shouldTransform(url) {
-    try {
-      const resp = await fetch(
-        `https://opengraph.ninja/api/v1?url=${encodeURIComponent(url)}`,
-        { method: 'HEAD' }
-      );
-      return resp.ok;
-    } catch {
-      return false;
-    }
+  name: 'donavon/transformer-open-graph',
+  shouldTransform: async (url) => {
+    const result = await fetchOpenGraph(url);
+    return !!result;
   },
+  getHTML: async (urlString) => {
+    const data = await fetchOpenGraph(urlString);
 
-  async getHTML(url): Promise<string> {
-    try {
-      const resp = await fetch(
-        `https://opengraph.ninja/api/v1?url=${encodeURIComponent(url)}`
-      );
-      if (!resp.ok) return url;
-      const data = (await resp.json()) as OpenGraphNinja;
+    // istanbul ignore if (shouldTransform prevents this, but if someone calls this directly then this would save them)
+    if (!data) return null;
 
-      return `
+    return `
     <div class="ogn-outer-container">
       <a class="ogn-container" href="${encodeHtml(
         data.requestUrl
       )}" target="_blank" rel="noopener noreferrer" data-twitter-card="${
-        data.details?.twitterCard ?? ''
-      }">
+      data.details?.twitterCard ?? ''
+    }">
         ${getImageHtml(data)}
         <div class="ogn-content">
           <p class="ogn-content-title">${encodeHtml(data.title ?? '')}</p>
@@ -91,9 +62,6 @@ const transformer: Transformer = {
       </a>
       </div>
     `;
-    } catch {
-      return url;
-    }
   },
 };
 

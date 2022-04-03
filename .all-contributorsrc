@@ -1,0 +1,28 @@
+{
+  "projectName": "transformer-open-graph",
+  "projectOwner": "donavon",
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributorsPerLine": 7,
+  "repoHost": "https://github.com",
+  "repoType": "github",
+  "skipCi": false,
+  "files": [
+    "README.md"
+  ],
+  "contributors": [
+    {
+      "login": "donavon",
+      "name": "Donavon West",
+      "avatar_url": "https://avatars.githubusercontent.com/u/887639?v=4",
+      "profile": "https://donavon.com",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "test"
+      ]
+    }
+  ]
+}

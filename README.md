@@ -4,9 +4,12 @@ A transformer for [`@remark-embedder/core`](https://github.com/remark-embedder/c
 
 - Works with [`@remark-embedder/core`](https://github.com/remark-embedder/core)
 - Supports Twitter Cards and Open Graph
-- Powered by [Open Graph Ninja](https://opengraph.ninja/)'s API.
-- Written in TypeScript and fully typed
+- Powered by [Open Graph Ninja](https://opengraph.ninja/)'s API
 - 100% test coverage
+- Written in TypeScript and fully typed
+- Awesome! 🎉
+
+Want to see an example? Check out [https://donavon.com/blog/markdown#social-links](https://donavon.com/blog/markdown#social-links)
 
 ## Usage
 
@@ -35,7 +38,7 @@ async function go() {
   // <p>This is my website:</p>
   // <div class="ogn-outer-container">
   //   <a class="ogn-container" href="https://donavon.com/" target="_blank" rel="noopener noreferrer" data-twitter-card="summary">
-  //     <img src="https://donavon.com/build/_assets/donavon-avatar-ZS673ZB6.jpeg" alt="Donavon West's website" class="ogn-image">
+  //     <img class="ogn-image" src="https://donavon.com/img/donavon-avatar.jpeg" alt="Donavon West's website">
   //     <div class="ogn-content">
   //       <p class="ogn-content-title">Donavon West's website</p>
   //       <p class="ogn-content-description">Donavon West is a full-stack software engineer living in the New York City area.</p>
