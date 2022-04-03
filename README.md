@@ -55,7 +55,7 @@ go();
 
 You'll need to B.Y.O. CSS, but you can get beautiful web page preview output like this.
 
-![sample screen](./docs/example.png?raw=true)
+![sample screen](./docs/example.jpeg?raw=true)
 
 ## Getting Started
 
