@@ -83,6 +83,27 @@ const result = await remark()
 // <h2>Hello donavon.com</h2>
 ```
 
+## Use with other transformers
+
+If you are using other @remark-embedder transformers (e.g. [`@remark-embedder/transformer-oembed`](https://github.com/remark-embedder/transformer-oembed)), place `transformer-open-graph` last in the `transformers` array.
+
+For example.
+
+```ts
+import remarkEmbedder, { RemarkEmbedderOptions } from '@remark-embedder/core';
+import oembedTransformer from '@remark-embedder/transformer-oembed';
+import transformerOpenGraph from 'transformer-open-graph';
+
+const remarkEmbedderOptions: RemarkEmbedderOptions = {
+  transformers: [oembedTransformer, transformerOpenGraph],
+};
+
+const result = await remark()
+  .use(remarkEmbedder, remarkEmbedderOptions)
+  .use(html)
+  .process(exampleMarkdown);
+```
+
 ## Example output
 
 You'll need to B.Y.O. CSS, but you can get beautiful web page preview output like this.
